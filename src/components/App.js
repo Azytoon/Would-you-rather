@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
+import LeaderBoard from './LeaderBoard'
+import Home from './Home'
+import LoadingBar from 'react-redux-loading'
+import SignIn from './SignIn'
+import NewQuestion from './NewQuestion'
+
 
 class App extends Component {
   componentDidMount() {
@@ -9,10 +15,26 @@ class App extends Component {
   render() {
     return (
       <div>
-        Hello World
+        <LoadingBar />
+        {this.props.loading === true
+          ? null
+          : <React.Fragment>
+              <LeaderBoard /> 
+              <hr />
+              <Home />
+              <SignIn/>
+              <NewQuestion/>
+          </React.Fragment>
+          }
       </div>
     )
   }
 }
 
-export default connect()(App) 
+function mapStateToProps ({ authedUser }) {
+  return {
+    loading: authedUser === null
+  }
+}
+
+export default connect(mapStateToProps)(App) 
