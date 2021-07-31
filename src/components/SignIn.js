@@ -1,20 +1,29 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { setAuthedUser } from '../actions/authedUser'
 
 class SignIn extends Component {
     state = {
         option: '',
       }
-    handleChange_one = (e) => {}
     handleSubmit = (e) => {
-      e.preventDefault()
-        console.log("hamo")
-      // todo: Handle Like Tweet
+        e.preventDefault()
+        const { option } = this.state
+        const { dispatch } = this.props
+
+        dispatch(setAuthedUser(option))
+
+        this.setState(() => ({
+            option: ''
+        }))
+        this.props.history.push(`/Home`)
     }
     handleChange = (e) => {
-        e.preventDefault()
-          console.log("hamo")
-        // todo: Handle Like Tweet
+        const option = e.target.value
+        this.setState(() => ({
+          option
+        }))
     }
     render() {
         const { usersNames } = this.props
@@ -60,4 +69,4 @@ function mapStateToProps ({ users }) {
     }
   }
   
-  export default connect(mapStateToProps)(SignIn)
+  export default withRouter(connect(mapStateToProps)(SignIn))

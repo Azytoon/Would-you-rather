@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-//import { handleAddTweet } from '../actions/tweets'
-//import { Redirect } from 'react-router-dom'
+import { handleAddQuestion } from '../actions/questions'
+import { Redirect } from 'react-router-dom'
+import Nav from './Nav'
 
 class NewQuestion extends Component {
   state = {
@@ -10,44 +11,44 @@ class NewQuestion extends Component {
     toHome: false,
   }
   handleChange_one = (e) => {
-    //const text = e.target.value
-/*
+    const text_one = e.target.value
     this.setState(() => ({
-      text
-    }))*/
+      text_one
+    }))
   }
   handleChange_two = (e) => {
-    //const text = e.target.value
-/*
+    const text_two = e.target.value
     this.setState(() => ({
-      text
-    }))*/
+      text_two
+    }))
   }
   handleSubmit = (e) => {
     e.preventDefault()
+    //console.log(this.props)
+    const { text_one, text_two } = this.state
+    const { dispatch } = this.props
 
-   /* const { text } = this.state
-    const { dispatch, id } = this.props
-
-    dispatch(handleAddTweet(text, id))
+    dispatch(handleAddQuestion(text_one, text_two))
 
     this.setState(() => ({
       text: '',
-      toHome: id ? false : true,
+      toHome: true,
     }))
-    */
+    
   }
   render() {
-    const { text_one, text_two} = this.state
+    const { text_one, text_two, toHome } = this.state
 
     /* todo: Redirect to / if submitted */
-    /*if (toHome === true) {
-      return <Redirect to='/' />
+    if (toHome === true) {
+      return <Redirect to='/Home' />
     }
 
-    const tweetLeft = 280 - text.length*/
+    /*const tweetLeft = 280 - text.length*/
 
     return (
+      <React.Fragment>
+        <Nav/>
         <div className='new_question'>
           <h3 className='center'>Create New Question</h3>
                 <form className='center' onSubmit={this.handleSubmit}>
@@ -74,7 +75,8 @@ class NewQuestion extends Component {
                             Submit
                     </button>
                 </form>     
-            </div>  
+            </div>
+          </React.Fragment>  
     )
   }
 }

@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { formatDate } from '../utils/api'
+import { withRouter } from 'react-router-dom'
 
 class CompactQuestion extends Component {
-    handleClick = (e) => {
+    handleClick = ( e, id, status) => {
       e.preventDefault()
-
-      // todo: Handle Like Tweet
+      status?
+      this.props.history.push(`/question/${id}`)
+      :
+      this.props.history.push(`/question_result/${id}`)
     }
     render() {
-        const { users, question } = this.props
-
+        const { users, question, status } = this.props
+        //console.log(status) status = true -> unaswered question , status = false -> unswered question
         if (question === null) {
           return <p>This Question doesn't existd</p>
         }
@@ -19,7 +22,7 @@ class CompactQuestion extends Component {
         //get avatar of him
         const avatarURL = users[question.author].avatarURL
         //get time of question
-        const { timestamp } = question
+        const { timestamp , id } = question
         const questionTime = formatDate(timestamp)
 
 
@@ -34,7 +37,7 @@ class CompactQuestion extends Component {
                         <span className='userName'>{authorName} asked</span>
                         <span className='user-info'> @ {questionTime} </span>
                         <span className='user-info'> Would you rather ... </span>
-                        <button onClick={this.handleClick}> view poll </button>         
+                        <button onClick={(e) => this.handleClick(e, id, status)}> view poll </button>         
                 </div>
             </div>
         )
@@ -51,4 +54,4 @@ function mapStateToProps ({ users, questions, authedUser }, { id }) {
     }
   }
   
-  export default connect(mapStateToProps)(CompactQuestion)
+  export default withRouter(connect(mapStateToProps)(CompactQuestion))

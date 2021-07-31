@@ -21,14 +21,6 @@ let users = {
     },
     questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
   },
-  ahmed: {
-    id: 'ahmed',
-    name: 'Ahmed Zaytoun',
-    avatarURL: 'az.jpg',
-    answers: {
-    },
-    questions: [],
-  },
   johndoe: {
     id: 'johndoe',
     name: 'John Doe',
